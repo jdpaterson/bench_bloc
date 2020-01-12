@@ -5,8 +5,8 @@ require 'benchmark'
 require 'bench_bloc'
 require 'bench_bloc/rake_helper.rb'
 
-# TODO: Look recursively in folders using 'bench_bloc/**/*.block.rb
-CONFIG_FILES=FileList["bench_bloc/*.block.rb"]
+# TODO: Look recursively in folders using 'bench_bloc/**/*.bloc.rb
+CONFIG_FILES=FileList["bench_bloc/*.bloc.rb"]
 
 def put_namespace key, namespace
   namespace key do
