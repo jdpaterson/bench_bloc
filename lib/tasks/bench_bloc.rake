@@ -52,7 +52,7 @@ end
 CONFIG_FILES.each do |f|
   config = eval File.read(f)
   config.keys.each do |key|
-    namespace :bench do
+    namespace :bench_bloc do
       put_namespace key, config[key]
       desc "Options parser for bench tasks"
       task parse_options_util: :environment do
@@ -71,7 +71,7 @@ CONFIG_FILES.each do |f|
       desc "Run all benchmarks"
       task all: :environment do
         bench_tasks.each(&:execute)
-        Rake::Task["bench:clear_tests_util"].invoke
+        Rake::Task["bench_bloc:clear_tests_util"].invoke
       end
     end
   end
@@ -79,5 +79,5 @@ end
 
 bench_tasks.each do |task|
   Rake::Task[task.name]
-    .enhance(['bench:parse_options_util', 'bench:clear_tests_util'])
+    .enhance(['bench_bloc:parse_options_util', 'bench_bloc:clear_tests_util'])
 end
