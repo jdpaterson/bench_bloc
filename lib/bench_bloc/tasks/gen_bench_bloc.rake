@@ -2,9 +2,10 @@
 require 'rake'
 require 'pry'
 require 'benchmark'
-require "#{Rails.root}/benchmarks/bench_utils"
+require 'bench_bloc'
+require 'bench_bloc/rake_helper.rb'
 
-CONFIG_FILES=FileList['benchmarks/*.block.rb']
+CONFIG_FILES=FileList["benchmarks/*.block.rb"]
 
 def put_namespace key, namespace
   namespace key do
