@@ -1,4 +1,4 @@
-module RubyProfHelpers
+module BenchBloc::RubyProfHelpers
   def run_ruby_prof lam, args
   #   RubyProf.start
   #     lam.call args
