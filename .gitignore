@@ -10,3 +10,4 @@
 # rspec failure tracking
 .rspec_status
 bench_bloc-*.gem
+benchmarks.log
