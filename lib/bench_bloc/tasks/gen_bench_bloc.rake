@@ -1,12 +1,10 @@
-# TODO: Implement OptionsParser ie --rubyprof
 require 'rake'
-require 'pry'
-require 'benchmark'
-require 'bench_bloc/helpers/benchmark_helpers'
-require 'bench_bloc/helpers/rake_helpers.rb'
+require 'bench_bloc'
 
 # TODO: Look recursively in folders using 'bench_bloc/**/*.bloc.rb
 BLOC_FILES=FileList["bench_bloc/*.bloc.rb"]
+
+include BenchBloc
 
 BLOC_FILES.each do |f|
   bloc = eval File.read(f)

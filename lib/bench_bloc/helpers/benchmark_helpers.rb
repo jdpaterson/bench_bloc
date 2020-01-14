@@ -10,7 +10,7 @@ module BenchBloc::BenchmarkHelpers
 
   def write_to_log results
     if defined?(Rails)
-      Logger.new("#{__dir__}/log/benchmarks.log")
+      Logger.new("#{Rails.root}/log/benchmarks.log")
       log.info(results)
     else
       f = File.new("benchmarks.log", "w")
