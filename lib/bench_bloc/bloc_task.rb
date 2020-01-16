@@ -8,6 +8,7 @@ module BenchBloc
                 :to_profile
     
     def initialize namespace, bloc_task
+      super(bloc_task)
       @namespace = namespace
       parse_bloc_task bloc_task
     end

@@ -2,9 +2,8 @@ module BenchBloc
   # Responsible for generating rake tasks from a hash and/or creating child Blocs
   class Bloc
     attr_accessor :bloc_hash, :bloc_namespaces
-    def initialize bloc_hash
+    def initialize bloc_hash, auto_gen=true
       @bloc_hash, @bloc_namespaces = bloc_hash, []
-      # generate_bloc
     end
 
     def generate_bloc
@@ -17,13 +16,19 @@ module BenchBloc
     end
 
     def [](namespace_key)
-      bloc_namespaces[0].bloc_namespaces.find { |bn| namespace_key == bn.namespace_key }
-    end
+      bench_bloc_namespace
+        .bloc_namespaces
+        .find { |bn| namespace_key == bn.namespace_key }
+    end   
 
     private
     def is_task? obj
       obj.keys.any?(:to_profile)
-    end    
+    end
+    
+    def bench_bloc_namespace
+      bloc_namespaces[0]
+    end
 
     # def put_bloc_namespaces bloc
     #   bloc.keys.each do |key|
