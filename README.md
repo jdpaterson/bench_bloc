@@ -1,6 +1,6 @@
 # BenchBloc
 
-BenchBloc is a benchmarking tool for Ruby that allows you to benchmark your code by using a simple hash syntax, which will generate rake tasks, which when run will format and log to a bench_bloc.log file. It currently allows you to bench via Ruby's built-in Benchmark API or through the ruby_prof gem.
+BenchBloc is a benchmarking tool for Ruby that allows you to benchmark your code by using a simple hash syntax, which will generate rake tasks, which when run will format and log to a bench_bloc.log file. It currently allows you to bench via Ruby's built-in Benchmark API or through the [ruby-prof gem](https://github.com/ruby-prof/ruby-prof).
 
 ## Installation
 
