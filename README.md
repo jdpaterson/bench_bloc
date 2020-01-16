@@ -28,13 +28,23 @@ To generate a task, a hash must contain at least the `prof` property, among othe
 ```
 {
     posts: {
-        save_a_post: (obj) -> { Post.save! }
+        save_a_post: (obj) -> { sleep 3 }
     }
 }
 ```
 
 Will generate the `rake bench_bloc:posts:save_a_post` rake task.
 When this task is run the results will be formatted and saved to /log/bench_bloc.log
+
+```
+
+---
+	Test Description
+	Total Time: 3.0 seconds
+
+		Test Sleep 3 Seconds
+			3.0 seconds
+```
 
 ## Development
 
