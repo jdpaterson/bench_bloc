@@ -7,45 +7,42 @@ require "bench_bloc/bloc_namespace"
 require "bench_bloc/bloc_task"
 
 RSpec.describe BenchBloc, type: :bench_bloc do
+  before(:all) do
+    BLOC_FILES = FileList["./spec/*.rake"]
+    BLOC_FILES.each do |f|
+      load f
+    end
+  end
+  it "has a version number" do
+    expect(BenchBloc::VERSION).not_to be nil
+  end
   describe "Basic bloc generator" do
     it "generates a bloc with correct task name" do
       bbh = eval File.read("./spec/fixtures/namespace_fixture.rb")
-      bb = BenchBloc::Bloc.new(bbh)      
-      bb.generate_bloc     
+      bb = BenchBloc::Bloc.new(bbh)
+      bb.generate_bloc
       has_spec_test = bb[:spec_namespace]
                       .bloc_tasks
-                      .any? { |bt| bt.namespace == :spec_task }       
+                      .any? { |bt| bt.namespace == :spec_task }
       expect(has_spec_test).to eq(true)
-    end    
+    end
   end
-  # before(:all) do
-  #   BLOC_FILES=FileList["./spec/*.rake"]
-  #     BLOC_FILES.each do |f|
-  #       load f
-  #     end
-  # end
-  # it "has a version number" do
-  #   expect(BenchBloc::VERSION).not_to be nil
-  # end
 
-  # let(:task_names) {
-  #   [
-  #     'bench_bloc:all',
-  #     'bench_bloc:clear_tests_util',
-  #     'bench_bloc:parse_options_util',
-  #     'bench_bloc:spec_namespace:spec_task'
-  #   ]
-  # }
+  let(:task_names) {
+    [
+      'bench_bloc:spec_namespace:spec_task'
+    ]
+  }
+  describe "Correct rake tasks are generated" do
+    it "has the correct task names" do
+      gen_tasks = Rake.application.tasks.map(&:name).flatten
+      expect(gen_tasks).to match_array(task_names)
+    end
+    it "tasks return correct value" do
+      Rake::Task.define_task(:environment)
+      Rake::Task['bench_bloc:spec_namespace:spec_task'].invoke
+      has_results = File.open("benchmarks.log", "r").grep(/Total Time: 3.0 seconds/)
+    end
+  end
 
-  # describe "loads a rakefile which calls the task generator methods" do
-  #   it "has the correct task names" do
-  #     gen_tasks = Rake.application.tasks.map(&:name).flatten
-  #     expect(gen_tasks).to match_array(task_names)
-  #   end
-  #   it "tasks return correct value" do
-  #     Rake::Task.define_task(:environment)
-  #     Rake::Task['bench_bloc:spec_namespace:spec_task'].invoke
-  #     has_results = File.open("benchmarks.log", "r").grep(/Total Time: 3.0 seconds/)
-  #   end
-  # end
 end

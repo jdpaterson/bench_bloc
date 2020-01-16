@@ -13,12 +13,12 @@ module BenchBloc
       parse_bloc_task bloc_task
     end
 
-    def put_task
-      desc new_task[:desc]
-      task key => :environment do
+    def rake_task
+      desc description
+      task namespace => :environment do
         to_profs = [to_profile.call].flatten
         bm_results = bm_run_results self, to_profs
-        bm_log_results bm_results, new_task[:desc]
+        bm_log_results bm_results, description
         # run ruby-prof
         # format_ruby_prof(run_ruby_prof(new_task[:prof], tp)) if @options[:ruby_prof] == true
       end

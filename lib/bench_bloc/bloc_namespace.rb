@@ -26,20 +26,18 @@ module BenchBloc
           )
         end
       end
-    end    
+    end
 
-    # private
-    
-    # def put_namespace
-    #   namespace key do
-    #     namespace.keys.each do |ns_key|
-    #       if is_task? namespace[ns_key]
-    #         put_task ns_key, namespace[ns_key]
-    #       else
-    #         put_namespace ns_key, namespace[ns_key]
-    #       end
-    #     end
-    #   end
-    # end
+    def rake_namespace
+      namespace namespace_key do
+        bloc_tasks.each do |bt|
+          bt.rake_task
+        end
+        bloc_namespaces.each do |bn|
+          bn.rake_namespace
+        end
+      end
+    end
+
   end
 end
