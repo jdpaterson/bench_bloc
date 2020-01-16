@@ -28,7 +28,9 @@ To generate a task, a hash must contain at least the `prof` property, among othe
 ```
 {
     posts: {
-        save_a_post: (obj) -> { sleep 3 }
+        save_a_post: {
+            prof: (obj) -> { sleep 3 }
+        }
     }
 }
 ```
