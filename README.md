@@ -1,8 +1,6 @@
 # BenchBloc
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/bench_bloc`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+BenchBloc is a benchmarking tool for Ruby that allows you to benchmark your code by using a simple hash syntax, which will generate rake tasks, which when run will format and log to a bench_bloc.log file. It currently allows you to bench via Ruby's built-in Benchmark API or through the ruby_prof gem.
 
 ## Installation
 
@@ -22,7 +20,21 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+In a '/bench_bloc' folder at the root of your app, create any number of files that end in '\*.bloc.rb'.
+In these files use the Ruby hash syntax to namespace how you want the rake tasks to be generated. Task namespaces can be nested.
+
+To generate a task, a hash must contain at least the `prof` property, among others. The `prof` property must be a lamda, the block of which will be the code that you will benchmark.
+
+```
+{
+    posts: {
+        save_a_post: (obj) -> { Post.save! }
+    }
+}
+```
+
+Will generate the `rake bench_bloc:posts:save_a_post` rake task.
+When this task is run the results will be formatted and saved to /log/bench_bloc.log
 
 ## Development
 
@@ -32,7 +44,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/bench_bloc. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/jdpaterson/bench_bloc. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
@@ -40,4 +52,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the BenchBloc project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/bench_bloc/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the BenchBloc project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/jdpaterson/bench_bloc/blob/master/CODE_OF_CONDUCT.md).
