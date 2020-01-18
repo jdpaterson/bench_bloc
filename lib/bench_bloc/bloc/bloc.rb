@@ -31,7 +31,7 @@ module BenchBloc
 
     private
     def is_task? obj
-      obj.keys.any?(:to_profile)
+      obj.keys.any?(:profile)
     end
     
     def bench_bloc_namespace

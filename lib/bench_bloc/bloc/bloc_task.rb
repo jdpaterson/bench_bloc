@@ -16,9 +16,8 @@ module BenchBloc
 
     # TODO: Put into a TaskRunner class
     def run_task
-      objs_to_profile = [to_profile.call].flatten
       Benchmark.bm do |x|
-        objs_to_profile.each do |otp|
+        [to_profile.call].flatten.each do |otp|
           x.report(label.call(otp)) do
             profile.call(otp)
           end
@@ -29,7 +28,7 @@ module BenchBloc
     def rake_task
       desc description
       task namespace => :environment do
-        BenchBloc::Logger.new(run_task, description)
+        BenchBloc::Logger.new(run_task, description).log_results
         # run ruby-prof
         # format_ruby_prof(run_ruby_prof(new_task[:prof], tp)) if @options[:ruby_prof] == true
       end
