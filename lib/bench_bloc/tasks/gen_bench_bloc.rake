@@ -7,10 +7,11 @@ BLOC_FILES=FileList["bench_bloc/*.bloc.rb"]
 include BenchBloc
 
 BLOC_FILES.each do |f|
-  # bloc = BenchBloc::Bloc.new(eval File.read(f))
-  bloc = eval File.read(f)
-  put_bloc_namespaces bloc
+  bench_bloc_hash = eval File.read("./spec/fixtures/namespace_fixture.rb")
+  bench_bloc = BenchBloc::Bloc.new(bench_bloc_hash)
+  bench_bloc.generate_bloc
+  bench_bloc.rake_bloc
 end
 
-add_bench_hooks
+# add_bench_hooks
 

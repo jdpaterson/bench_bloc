@@ -1,3 +1,4 @@
+require 'bench_bloc'
 module BenchBloc
   class Bloc::Task < BenchBloc::Bloc
     attr_reader :description, 
@@ -13,12 +14,22 @@ module BenchBloc
       parse_bloc_task bloc_task
     end
 
+    # TODO: Put into a TaskRunner class
+    def run_task
+      objs_to_profile = [to_profile.call].flatten
+      Benchmark.bm do |x|
+        objs_to_profile.each do |otp|
+          x.report(label.call(otp)) do
+            profile.call(otp)
+          end
+        end
+      end
+    end
+
     def rake_task
       desc description
       task namespace => :environment do
-        to_profs = [to_profile.call].flatten
-        bm_results = bm_run_results self, to_profs
-        bm_log_results bm_results, description
+        BenchBloc::Logger.new(run_task, description)
         # run ruby-prof
         # format_ruby_prof(run_ruby_prof(new_task[:prof], tp)) if @options[:ruby_prof] == true
       end

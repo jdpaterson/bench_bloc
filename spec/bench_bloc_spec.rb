@@ -1,10 +1,6 @@
 require 'pry'
-# require 'rake'
-# require 'spec_helper'
+require 'spec_helper'
 require 'bench_bloc'
-require "bench_bloc/bloc"
-require "bench_bloc/bloc_namespace"
-require "bench_bloc/bloc_task"
 
 RSpec.describe BenchBloc, type: :bench_bloc do
   before(:all) do
