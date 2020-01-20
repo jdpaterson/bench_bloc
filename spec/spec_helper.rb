@@ -1,5 +1,7 @@
 require "bundler/setup"
 require "bench_bloc"
+ENV["RAILS_ENV"] = "test"
+require File.expand_path("./spec/dummy/config/environment.rb")
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
