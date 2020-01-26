@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     bench_bloc (0.1.14)
+      ruby-prof
 
 GEM
   remote: https://rubygems.org/
@@ -140,6 +141,7 @@ GEM
       rspec-mocks (~> 3.9.0)
       rspec-support (~> 3.9.0)
     rspec-support (3.9.2)
+    ruby-prof (1.1.0)
     sprockets (4.0.0)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)

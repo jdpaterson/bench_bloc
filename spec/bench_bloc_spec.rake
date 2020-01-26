@@ -3,6 +3,7 @@ require 'pry'
 require 'benchmark'
 
 include BenchBloc
+
 BLOC_FILES=FileList["./spec/fixtures/namespace_fixture.rb"]
 
 BLOC_FILES.each do |f|
@@ -11,4 +12,3 @@ BLOC_FILES.each do |f|
   bb.generate_bloc
   bb.rake_bloc
 end
-

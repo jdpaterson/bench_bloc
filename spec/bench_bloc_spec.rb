@@ -4,10 +4,11 @@ require 'bench_bloc'
 
 RSpec.describe BenchBloc, type: :bench_bloc do
   before(:all) do
-    BLOC_FILES = FileList["./spec/*.rake"]
-    BLOC_FILES.each do |f|
+    bloc_files = FileList["./spec/*.rake"]
+    bloc_files.each do |f|
       load f
     end
+    Rake::Task.define_task(:environment)
   end
   it "has a version number" do
     expect(BenchBloc::VERSION).not_to be nil
@@ -26,7 +27,10 @@ RSpec.describe BenchBloc, type: :bench_bloc do
 
   let(:task_names) {
     [
-      'bench_bloc:spec_namespace:spec_task'
+      'bench_bloc:all',
+      'bench_bloc:spec_namespace:spec_task',
+      'bench_bloc:spec_namespace:ruby_prof_task',
+      'environment'
     ]
   }
   describe "Correct rake tasks are generated" do
@@ -39,18 +43,29 @@ RSpec.describe BenchBloc, type: :bench_bloc do
       Rake::Task['bench_bloc:spec_namespace:spec_task'].invoke
       has_results = File.open("benchmarks.log", "r").grep(/Total Time: 3.0 seconds/)
     end
-  end  
+  end
 
   describe "Boot up dummy rails app" do
-    it "tasks are loaded on load_tasks" do       
+    it "tasks are loaded on load_tasks" do
       Rails.application.load_tasks
       has_bench_bloc_task = Rake
                             .application
                             .tasks
-                            .any? { |rt| 
+                            .any? { |rt|
                               rt.name.starts_with?('bench_bloc')
                             }
       expect(has_bench_bloc_task).to eq(true)
+    end
+  end
+
+  describe "Ruby-Prof Tests" do
+    it "generates ruby-prof results" do
+      Rake::Task['bench_bloc:spec_namespace:ruby_prof_task'].invoke
+      expect(File.zero?("#{Rails.root}/log/bench_bloc_ruby-prof.log")).to eq(false)
+    end
+    it "doesn't override previous lines" do
+      Rake::Task['bench_bloc:spec_namespace:ruby_prof_task'].invoke
+      expect(File.zero?("#{Rails.root}/log/bench_bloc_ruby-prof.log")).to eq(false)
     end
   end
 end
