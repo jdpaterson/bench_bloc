@@ -12,7 +12,8 @@ module BenchBloc
       bloc_namespaces.push(
         Bloc::Namespace.new(
           :bench_bloc,
-          bloc_hash
+          bloc_hash,
+          true
         )
       )
     end
@@ -27,13 +28,13 @@ module BenchBloc
       bench_bloc_namespace
         .bloc_namespaces
         .find { |bn| namespace_key == bn.namespace_key }
-    end   
+    end
 
     private
     def is_task? obj
       obj.keys.any?(:profile)
     end
-    
+
     def bench_bloc_namespace
       bloc_namespaces[0]
     end

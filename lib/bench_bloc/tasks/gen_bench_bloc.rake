@@ -13,5 +13,3 @@ BLOC_FILES.each do |f|
   bench_bloc.rake_bloc
 end
 
-# add_bench_hooks
-
