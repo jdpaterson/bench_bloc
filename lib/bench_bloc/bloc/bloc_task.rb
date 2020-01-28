@@ -30,7 +30,9 @@ module BenchBloc
     def run_benchmark
       Benchmark.bm do |x|
         [to_profile.call].flatten.each do |otp|
-          x.report(label.call(otp)) do
+          new_label = label.call(otp)
+          set_db_logger
+          x.report(new_label) do
             profile.call(otp)
           end
         end
@@ -51,6 +53,12 @@ module BenchBloc
       @title = bloc_task[:title]
       @to_profile = bloc_task[:to_profile]
       @ruby_prof = bloc_task[:ruby_prof] || false
+    end
+
+    def set_db_logger
+      if defined?(Rails)
+        ActiveRecord::Base.logger = ::Logger.new("#{Rails.root}/log/bench_bloc_#{Time.now}_db_queries.log")
+      end
     end
   end
 
