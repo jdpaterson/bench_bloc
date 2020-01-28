@@ -20,12 +20,12 @@ module BenchBloc
         # or it needs to be required
         # log = Rails::Logger.new("#{Rails.root}/log/benchmarks.log")
         # log.info(results)
-        f = File.new("#{Rails.root}/log/benchmarks.log", "w")
+        f = File.open("#{Rails.root}/log/benchmarks.log", "a")
           f.puts(results)
           f.puts(parse_db_logger)
           f.close
       else
-        f = File.new("benchmarks.log", "w")
+        f = File.new("benchmarks.log", "a")
         f.puts(results)
         f.puts(parse_db_logger)
         f.close
