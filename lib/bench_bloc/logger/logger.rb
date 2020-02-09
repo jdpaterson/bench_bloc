@@ -20,11 +20,12 @@ module BenchBloc
         # or it needs to be required
         # log = Rails::Logger.new("#{Rails.root}/log/benchmarks.log")
         # log.info(results)
-        f = File.new("#{Rails.root}/log/benchmarks.log", "w")
+        f = File.open("#{Rails.root}/log/benchmarks.log", "a")
           f.puts(results)
+          f.puts(parse_db_logger)
           f.close
       else
-        f = File.new("benchmarks.log", "w")
+        f = File.new("benchmarks.log", "a")
         f.puts(results)
         f.puts(parse_db_logger)
         f.close
@@ -35,7 +36,7 @@ module BenchBloc
 
     def parse_db_logger
       if defined?(Rails)
-        log_data = File.read("#{Rails.root}/log/db-queries.log").split("\n")
+        log_data = File.read($rails_db_logger_path).split("\n")
         base_aggregator = {
           SELECT: 0,
           INSERT: 0,

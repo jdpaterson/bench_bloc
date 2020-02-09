@@ -56,8 +56,9 @@ module BenchBloc
     end
 
     def set_db_logger
+      $rails_db_logger_path = "#{Rails.root}/log/bench_bloc_#{Time.now}_db_queries.log"
       if defined?(Rails)
-        ActiveRecord::Base.logger = ::Logger.new("#{Rails.root}/log/bench_bloc_#{Time.now}_db_queries.log")
+        ActiveRecord::Base.logger = ::Logger.new($rails_db_logger_path)
       end
     end
   end
